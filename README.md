@@ -5,7 +5,7 @@ This Python library helps to render HTML pages and plain text  with variable sub
 
 ## Templating syntax :
 
-## To delcare variables enclose the variable name with '%%'
+## To delcare variables enclose the variable name with '{{' and '}}'
 
     Hello {{ text }} -- 'text' is the variable here
 
@@ -65,4 +65,16 @@ or
 
 # Dependencies:
 
-<i>mould</i> uses python standard library <b>os</b> alone and nothing else.
+<i>mould</i> uses python standard library <b>os</b> and <b>platform</b> 
+
+# Example:
+
+        import module
+
+        input = "Hello {{ var }}"
+        variables = {"var" : "world !}
+
+        print(mould.it(input,variables)
+
+        Output:
+        Hello world !

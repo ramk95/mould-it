@@ -7,14 +7,14 @@ def _variable_parser(text):
     Description:
     This function parses the given text with variables and returns the variables and strings in comma separated format to put them directly to a print statement
 
-    Paramaters:
+    Parameters:
     text (string) : This string is supposed to have plain text with variables or variable expressions
 
     Returns: The plain text and variables / variable expressions are returned as a comma separated string which can be directly put into a print statement
 
     Example:
 
-            $ _variabe_parser("Hello {{ world }}")
+            $ _variable_parser("Hello {{ world }}")
             "Hello",world
     '''
     left_marker = "{{"
@@ -48,7 +48,7 @@ def _code_builder(input_content, variables):
 
     Parameters:
     input_content (string) : This is the user input, which is assumed to have multiple lines
-    variables (dictionary) : This contains the list of varibales and their values as key-value pairs
+    variables (dictionary) : This contains the list of variables and their values as key-value pairs
 
     Returns: Executable python code as a string
 
@@ -142,7 +142,7 @@ def it(input_template_content, input_variables):
 
     Parameters:
     input_template_content (string or file) : This is the user input, which can be a string or a file.
-    input_variables (dictionary) : This is the collection of variables and thier values as a dictionary
+    input_variables (dictionary) : This is the collection of variables and their values as a dictionary
 
     Returns:
     output_text (string) : Returns the rendered file as a string
