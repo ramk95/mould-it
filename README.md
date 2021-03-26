@@ -61,20 +61,20 @@ This will return the rendered output. You can either print it direclty or save i
     print(mould.it(input_text, variables_dictionary))
 or
 
-    rendered_data = mould.it(input_text, variables_dictionary))
+    rendered_data = mould.it(input_text, variables_dictionary)
 
 # Dependencies:
 
-<i>mould</i> uses python standard library <b>io</b> and <b>os</b>.
+<i>mould</i> uses python standard libraries <b>io</b> and <b>os</b>.
 
 # Example:
 
-        import module
+        import mould
 
         input = "Hello {{ var }}"
         variables = {"var" : "world !"}
 
-        print(mould.it(input,variables)
+        print(mould.it(input,variables))
 
         Output:
         Hello world !
