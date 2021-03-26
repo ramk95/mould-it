@@ -1,6 +1,6 @@
 # <i>mould</i> - A minimalistic templating engine for Python
 
-This Python library helps to render HTML pages and plain text  with variable substitutions, if conditions and for loops.
+This Python library helps to render HTML pages and plain text with variable substitutions, if conditions and for loops.
 
 
 ## Templating syntax :
@@ -28,17 +28,17 @@ Variable names can also be used to write if conditions.
     <p1> Hello Python! </p1>
     {% endif %}
     
-IF block supports else and elif as well.
+IF block supports 'else' and 'elif' as well.
 
 ## <b>for</b> loop
 
-Use '{%' and '%}' to enclose the lines where a for block starts and use the same with 'endfor' keyword for closing the if blocks
+Use '{%' and '%}' to enclose the lines where a 'for' block starts and use the same with 'endfor' keyword for closing the 'for' blocks
     
-    {% for n in l %}
+    {% for n in numbers %}
     This is line {{ n }} printed using for loop
     {% endfor %}
 
-In the above code, 'n' and 'l' are variables where 'n' is the looping variable and 'l' is the list on whose items the loop is run
+In the above code, 'n' and 'numbers' are variables where 'n' is the looping variable and 'numbers' is the list on whose items the loop is run
 
 <b>for</b> supports looping over lists and dictionaries
 
@@ -52,7 +52,7 @@ Import the library to your python program
     
     import mould
 
-Call the mould.it() with you input file / input text along with the dictionary of variables that you have used in your text / input file
+Call the mould.it() with your input file / input text along with a dictionary of variables that you have used in your text / input file
 
     mould.it(input_text, variables_dictionary)
 
@@ -65,7 +65,7 @@ or
 
 # Dependencies:
 
-<i>mould</i> uses python standard library <b>os</b> and <b>platform</b> 
+<i>mould</i> uses python standard library <b>io</b> and <b>os</b>.
 
 # Example:
 

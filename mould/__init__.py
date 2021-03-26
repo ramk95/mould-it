@@ -1,5 +1,7 @@
 import os
-import platform
+import io
+
+# Parses the lines present in input content whereever a variable or variable expression is present
 
 
 def _variable_parser(text):
@@ -39,7 +41,28 @@ def _variable_parser(text):
     return(",".join(output))
 
 
+# Checks for {{ , }} , {% , %}, if and for blocks' syntaxes and returns "good" if everything works and returns error messages if otherwise
+def _syntax_check(text):
+    left_marker = "{{"
+    right_marker = "}}"
+    left_if_marker = "{%"
+    right_if_marker = "%}"
+    if_block = "{% if"
+    for_block = "{% for"
+    end_if_block = "endif"
+    end_for_block = "endfor"
+    if not text.count(if_block) == text.count(end_if_block) and text.count((for_block)) == text.count((end_for_block)):
+        return "SyntaxError: please check 'if' or 'for' blocks"
+    for every_line in text.split("\n"):
+        if not every_line.count(left_marker) == every_line.count(right_marker):
+            return "SyntaxError: please check '{{' and '}}'"
+        if not every_line.count(left_if_marker) == every_line.count(right_if_marker):
+            return "SyntaxError: please check '{%' and '%}'"
+    return "good"
+
 # Builds the python code for the input supplied with variables and saves it in the 'output_string'
+
+
 def _code_builder(input_content, variables):
     '''
     Description:
@@ -72,15 +95,15 @@ def _code_builder(input_content, variables):
     right_marker = "%}"
     end_if_block = "endif"
     end_for_block = "endfor"
-    output_string = ""
-    indent = 0
-    space = " "
-    quotes = '"'
-    assignment_sign = " = "
     line_break = "\n"
+    output_string = "def mould_function(f):"+line_break
+    indent = 4
+    space = " "
+    quotes = "'''"
+    assignment_sign = " = "
     scoping_colon = ": "
     print_block_start = "print("
-    print_block_end = ")"
+    print_block_end = ", file=f)"
 
     for key, value in variables.items():
         # with open(output_file, "a") as f:
@@ -132,8 +155,8 @@ def _code_builder(input_content, variables):
                 line+quotes+print_block_end+line_break
     return output_string
 
-# Wrapper function that calls the code builder with input content and input variables
 
+# Wrapper function that calls the code builder with input content and input variables
 
 def it(input_template_content, input_variables):
     '''
@@ -149,21 +172,21 @@ def it(input_template_content, input_variables):
 
     Usage Example:
                 $ sample_input = "
-                 This is where it all starts!!!
-                 Hello {{ text }} This is a wonderful day. My name is {{ name }}.
-                 {% if a < b %}
-                 'b' is bigger
-                 The value of b is {{ b }}
-                 {% else %}
-                 'a' is bigger
-                 The value of a is {{ a }}
-                 {% endif %}
-                 "
+                This is where it all starts!!!
+                Hello {{ text }} This is a wonderful day. My name is {{ name }}.
+                {% if a < b %}
+                'b' is bigger
+                The value of b is {{ b }}
+                {% else %}
+                'a' is bigger
+                The value of a is {{ a }}
+                {% endif %}
+                "
                 $ sample_variables = {
-                 "text" : "World !"
-                 "name" : "Python"
-                 "a" : 50
-                 "b" : 100
+                "text" : "World !"
+                "name" : "Python"
+                "a" : 50
+                "b" : 100
                 }
                 $ mould.it(sample_input,sample_variables)
                 This is where it all starts!!!
@@ -172,27 +195,38 @@ def it(input_template_content, input_variables):
                 The value of b is 100
 
     '''
-    # Checks whether the input format is a string or a file and inputs to code_builder function accordingly
-    input_content = ""
-    temporary_code_file = "temp_mould_it.py"
-    temporary_output_file = "temp_mould.it.py_output"
-    if platform.system() == "Windows":
-        py = "python "
-    else:
-        py = "python3 "
-    if os.path.isfile(input_template_content):
-        input_content = open(input_template_content).read()
-    else:
-        input_content = input_template_content
+    try:
+        input_content = ""
+        # Checks whether the input_variables is a dictionary and if it is otherwise, returns to user with the same message
+        if type(input_variables) != dict:
+            return "Error: input_variables should be of type 'dictionary'"
 
-    built_code = _code_builder(input_content, input_variables)
+        if os.path.isfile(input_template_content) and len(open(input_template_content).read().strip()) != 0:
+            input_content = open(input_template_content).read()
+        elif len(input_template_content.strip()) != 0:
+            input_content = input_template_content
+        else:
+            return "Error: 'input_template_content' cannot be empty"
 
-    # Executes the rendered code and generates the output file
-    with open(temporary_code_file, "w+") as f:
-        f.write(built_code)
-    command = py+temporary_code_file + ">> "+temporary_output_file
-    os.system(command)
-    output_text = open(temporary_output_file).read()
-    os.remove(temporary_code_file)
-    os.remove(temporary_output_file)
-    return output_text.strip()
+        syntax_check_result = _syntax_check(input_content)
+
+        if syntax_check_result != "good":
+            return syntax_check_result
+
+        built_code = _code_builder(input_content, input_variables)
+        # Running the generated code 'built-code' in a separate environment and returs the output back to user
+        try:
+            f = io.StringIO()
+            env = {}
+            exec(built_code, env)
+            built_code_output = env['mould_function']
+            built_code_output(f)
+            return f.getvalue().strip()
+        except NameError:
+            return "NameError : Not all variables used, are present in 'input_variables' dictionary"
+        except SyntaxError as e:
+            return "SyntaxError: variables (or) 'if' (or) 'for' is not correctly syntaxed"
+        except TypeError:
+            return "TypeError: Please check whether the variables used in 'for' are of the allowed datatypes"
+    except:
+        return "An error occurred. Please try again"

@@ -2,3 +2,5 @@ dist/*
 .DS_Store
 mould.*
 mould/.DS_Store
+mould/__py*
+mould/test.py
