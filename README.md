@@ -1,4 +1,4 @@
-# <i>mould</i> - A minimalistic templating engine for Python
+# <i><b>mould</i></b> - A minimalistic templating engine for Python
 
 This Python library helps to render HTML pages and plain text with variable substitutions, if conditions and for loops.
 
@@ -19,16 +19,24 @@ Use '{%' and '%}' to enclose the lines where an if block starts and use the same
 
     
     {% if 5 < 6  %}
-    <p1> Hello world! </p1>
+    Hello world!
     {% endif %}
     
 Variable names can also be used to write if conditions.
 
     {% if x > y %}
-    <p1> Hello Python! </p1>
+    Hello Python!
     {% endif %}
     
-IF block supports 'else' and 'elif' as well.
+<b>if</b> block supports 'else' and 'elif' as well.
+
+    {% if x > y %}
+    Hello X!
+    {% elif z > x %}
+    Hello Z!
+    {% else %}
+    Hello ABC!
+    {% endif %}
 
 ## <b>for</b> loop
 
@@ -38,16 +46,21 @@ Use '{%' and '%}' to enclose the lines where a 'for' block starts and use the sa
     This is line {{ n }} printed using for loop
     {% endfor %}
 
-In the above code, 'n' and 'numbers' are variables where 'n' is the looping variable and 'numbers' is the list on whose items the loop is run
+In the above code, 'n' and 'numbers' are variables where 'n' is the looping variable and 'numbers' is the list on whose items, the loop is run.
 
-<b>for</b> supports looping over lists and dictionaries
+<b>for</b> supports looping over lists, strings and dictionaries
 
-# How to use:
+# How to install:
 
-You can install this using pip
+You can get this from <i>PyPI</i>  using pip
 
     pip install mould
 
+Alternatively, you can get it from <i>git</i> also using pip.
+
+    pip install https://github.com/ramk95/mould-it/archive/refs/heads/master.zip
+
+# How to use:
 Import the library to your python program
     
     import mould
@@ -65,7 +78,7 @@ or
 
 # Dependencies:
 
-<i>mould</i> uses python standard libraries <b>io</b> and <b>os</b>.
+<i>mould</i> uses python standard libraries <b>io</b> and <b>os</b>. No other dependent packages are required.
 
 # Example:
 
@@ -75,6 +88,8 @@ or
         variables = {"var" : "world !"}
 
         print(mould.it(input,variables))
+
+
 
         Output:
         Hello world !
