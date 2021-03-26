@@ -42,7 +42,7 @@ def _variable_parser(text):
 
 
 # Checks for {{ , }} , {% , %}, if and for blocks' syntaxes and returns "good" if everything works and returns error messages if otherwise
-def _syntax_check(text):
+def _syntax_checker(text):
     left_marker = "{{"
     right_marker = "}}"
     left_if_marker = "{%"
@@ -208,7 +208,7 @@ def it(input_template_content, input_variables):
         else:
             return "Error: 'input_template_content' cannot be empty"
 
-        syntax_check_result = _syntax_check(input_content)
+        syntax_check_result = _syntax_checker(input_content)
 
         if syntax_check_result != "good":
             return syntax_check_result
@@ -224,7 +224,7 @@ def it(input_template_content, input_variables):
             return f.getvalue().strip()
         except NameError:
             return "NameError : Not all variables used, are present in 'input_variables' dictionary"
-        except SyntaxError as e:
+        except SyntaxError:
             return "SyntaxError: variables (or) 'if' (or) 'for' is not correctly syntaxed"
         except TypeError:
             return "TypeError: Please check whether the variables used in 'for' are of the allowed datatypes"
