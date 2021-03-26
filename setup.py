@@ -12,7 +12,7 @@ setup(name='mould',
       author='Ramakrishnan H',
       license='MIT',
       AUTHOR_EMAIL='ernest.thornhill.corp@gmail.com',
-      URL='https://github.com/ramk95/mould',
+      URL='https://github.com/ramk95/mould-it',
       install_requires=INSTALL_REQUIRES,
       packages=find_packages()
       )
