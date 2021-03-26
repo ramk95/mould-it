@@ -72,7 +72,7 @@ or
         import module
 
         input = "Hello {{ var }}"
-        variables = {"var" : "world !}
+        variables = {"var" : "world !"}
 
         print(mould.it(input,variables)
 
