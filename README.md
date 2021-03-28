@@ -13,6 +13,7 @@ You can use the same syntax to write variable expressions.
 
     This is line number {{ n+10 }}
 
+
 ## <b>if</b> conditional
 <br>
 Use '{%' and '%}' to enclose the lines where an if block starts and use the same with 'endif' keyword for closing the if blocks
@@ -22,7 +23,7 @@ Use '{%' and '%}' to enclose the lines where an if block starts and use the same
     Hello world!
     {% endif %}
     
-Variable names can also be used to write if conditions.
+Variables can also be used to write if conditions.
 
     {% if x > y %}
     Hello Python!
