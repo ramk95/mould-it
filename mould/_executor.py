@@ -1,7 +1,7 @@
 # Wrapper function that calls the code builder with input content and input variables
 import os
 import io
-from _utils import _build_python_code, _validate_input_syntax, _parse_the_variables
+from mould._utils import _build_python_code, _validate_input_syntax, _parse_the_variables
 
 
 def it(input_template_content, input_variables):

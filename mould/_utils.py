@@ -1,4 +1,4 @@
-from _constants import *
+from mould._constants import *
 
 # Checks for syntax errors and returns the error text if there are any.
 
