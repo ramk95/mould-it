@@ -5,7 +5,7 @@ INSTALL_REQUIRES = [
 ]
 
 setup(name='mould',
-      version='0.0.6',
+      version='0.0.7',
       description='A minimalistic python templating library',
       long_description=open('README.md').read(),
       long_description_content_type='text/markdown',
