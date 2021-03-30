@@ -5,7 +5,7 @@ This Python library helps to render HTML pages and plain text with variable subs
 
 ## Templating syntax :
 
-## To delcare variables enclose the variable name with '{{' and '}}'
+## To delcare variables enclose the variable name with '{{ ' and ' }}'
 
     Hello {{ text }} -- 'text' is the variable here
 
@@ -16,14 +16,14 @@ You can use the same syntax to write variable expressions.
 
 ## <b>if</b> conditional
 <br>
-Use '{%' and '%}' to enclose the lines where an if block starts and use the same with 'endif' keyword for closing the if blocks
+Use '{% ' and ' %}' to enclose the lines where an if block starts and use the same with 'endif' keyword for closing the if blocks
 
     
     {% if 5 < 6  %}
     Hello world!
     {% endif %}
     
-Variables can also be used to write if conditions.
+Variables can also be used to write if conditions. Inside the conditional statement, the variables can be written as such. The enclosing syntax mentioned above is not required.
 
     {% if x > y %}
     Hello Python!
@@ -41,7 +41,7 @@ Variables can also be used to write if conditions.
 
 ## <b>for</b> loop
 
-Use '{%' and '%}' to enclose the lines where a 'for' block starts and use the same with 'endfor' keyword for closing the 'for' blocks
+Use '{% ' and ' %}' to enclose the lines where a 'for' block starts and use the same with 'endfor' keyword for closing the 'for' blocks
     
     {% for n in numbers %}
     This is line {{ n }} printed using for loop
@@ -66,7 +66,7 @@ Import the library to your python program
     
     import mould
 
-Call the mould.it() with your input file / input text along with a dictionary of variables that you have used in your text / input file
+Call the mould.it() function with your input file / input text along with a dictionary of variables that you have used in your text / input file
 
     mould.it(input_text, variables_dictionary)
 
