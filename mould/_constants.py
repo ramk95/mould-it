@@ -22,6 +22,14 @@ SPACE = " "
 
 QUOTES = "'''"
 
+ESCAPED_SINGLE_QUOTE = r"\'"
+
+ESCAPED_DOUBLE_QUOTE = r'\"'
+
+SINGLE_QUOTE = "'"
+
+DOUBLE_QUOTE = '"'
+
 ASSIGNMENT_SIGN = " = "
 
 SCOPING_COLON = ": "

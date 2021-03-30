@@ -15,8 +15,18 @@ def _validate_input_syntax(input_content):
             return "SyntaxError: please check '{%' and '%}'"
     return ""
 
+# Escaping the quotes present in user input.
+
+
+def _escape_the_quotes(line_with_quotes):
+    line_with_escaped_double_quote = line_with_quotes.replace(
+        DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE)
+    line_with_escaped_all_quotes = line_with_escaped_double_quote.replace(
+        SINGLE_QUOTE, ESCAPED_SINGLE_QUOTE)
+    return line_with_escaped_all_quotes
 
 # Parses the lines present in input content where-ever a variable or variable expression is present
+
 
 def _parse_the_variables(input_line):
     '''
@@ -40,8 +50,11 @@ def _parse_the_variables(input_line):
         if VAR_OPEN_MARKER in input_line:
             input_line = input_line.split(VAR_OPEN_MARKER, 1)
             if input_line[0] != "":
-                output.append(STR_BLOCK_START + QUOTES +
-                              input_line[0] + QUOTES + STR_BLOCK_END)
+                if SINGLE_QUOTE in input_line[0] or DOUBLE_QUOTE in input_line[0]:
+                    variable_exp = _escape_the_quotes(input_line[0])
+                else:
+                    variable_exp = input_line[0]
+                output.append(QUOTES + variable_exp + QUOTES)
 
             input_line = input_line[1].strip().split(VAR_CLOSE_MARKER, 1)
             output.append(STR_BLOCK_START + input_line[0] + STR_BLOCK_END)
@@ -50,8 +63,8 @@ def _parse_the_variables(input_line):
                 input_line = input_line[1]
         else:
             if input_line[-1] != "":
-                output.append(STR_BLOCK_START + QUOTES +
-                              input_line + QUOTES + STR_BLOCK_END)
+                input_line = _escape_the_quotes("".join(input_line))
+                output.append(QUOTES + input_line + QUOTES)
             break
 
     return "+".join(output)
@@ -96,7 +109,14 @@ def _build_python_code(input_content, variables):
                 QUOTES + str(value) + QUOTES + LINE_BREAK
 
     for every_line in input_content.split(LINE_BREAK):
-        line = every_line.strip()
+
+        if SINGLE_QUOTE in every_line or DOUBLE_QUOTE in every_line:
+            if not every_line.count(VAR_OPEN_MARKER):
+                line = _escape_the_quotes(every_line.strip())
+            else:
+                line = every_line.strip()
+        else:
+            line = every_line.strip()
 
         # Checks for if,else,elif and for blocks and adds the relevant python code block to the output code
 
@@ -126,7 +146,7 @@ def _build_python_code(input_content, variables):
         # Checks for plain lines to be printed as such and add them to the output code
 
         elif VAR_OPEN_MARKER not in line and IF_FOR_OPEN_MARKER not in line:
-            output_string += (indent*SPACE)+PRINT_BLOCK_START + QUOTES + \
+            output_string += (indent*SPACE) + PRINT_BLOCK_START + QUOTES + \
                 line + QUOTES + PRINT_BLOCK_END + LINE_BREAK
 
     return output_string
